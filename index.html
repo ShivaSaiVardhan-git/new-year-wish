@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy New Year ✨</title>
+<title>Happy New Year 2026 ✨</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
+<style>
 * {
   margin: 0;
   padding: 0;
@@ -16,90 +16,90 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0f2027, #000);
   height: 100vh;
+  background: radial-gradient(circle at top, #1a2a6c, #000);
   overflow: hidden;
-  color: #fff;
+  color: white;
 }
 
-/* ===== PARTICLES ===== */
-.particle {
+/* ===== FIREWORKS ===== */
+.firework {
   position: absolute;
   width: 6px;
   height: 6px;
-  background: gold;
   border-radius: 50%;
-  animation: floatUp linear infinite;
+  background: gold;
+  animation: explode 2.5s infinite ease-out;
   opacity: 0.8;
 }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh) scale(0.3);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(-10vh) scale(1);
-    opacity: 1;
-  }
+@keyframes explode {
+  0% {transform: scale(0); opacity: 1;}
+  100% {transform: scale(18); opacity: 0;}
 }
 
-/* ===== MAIN CARD ===== */
+/* ===== CENTER CARD ===== */
 .container {
-  position: relative;
-  z-index: 2;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
 .card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 25px;
-  padding: 35px 30px;
-  max-width: 420px;
-  width: 90%;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(16px);
+  border-radius: 26px;
+  padding: 36px 30px;
+  max-width: 430px;
+  width: 92%;
   text-align: center;
-  box-shadow: 0 0 40px rgba(255,215,0,0.25);
-  animation: popIn 1.5s ease forwards;
-  opacity: 0;
+  box-shadow: 0 0 50px rgba(255,215,0,0.3);
 }
 
-@keyframes popIn {
-  0% {transform: scale(0.7); opacity: 0;}
-  60% {transform: scale(1.05); opacity: 1;}
-  100% {transform: scale(1);}
-}
-
-h1 {
+/* ===== SHIMMER TEXT ===== */
+.shimmer {
   font-size: 30px;
-  margin-bottom: 10px;
-  animation: fadeSlide 1.5s ease forwards;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    #fff,
+    #ffd700,
+    #fff
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s infinite;
 }
 
-.name {
-  color: gold;
-  font-weight: 600;
+@keyframes shimmer {
+  0% {background-position: -200%;}
+  100% {background-position: 200%;}
 }
 
 .message {
-  margin-top: 20px;
   font-size: 16px;
   line-height: 1.7;
-  opacity: 0;
-  animation: reveal 1.5s ease forwards;
-  animation-delay: 1.3s;
+  margin-top: 18px;
 }
 
-@keyframes reveal {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
+.name {
+  color: #ffd700;
+  font-weight: 600;
 }
 
-button {
-  margin-top: 25px;
+.footer {
+  margin-top: 22px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* ===== MUSIC BUTTON ===== */
+.music-btn {
+  margin-top: 20px;
   padding: 10px 22px;
   border-radius: 30px;
   border: none;
@@ -107,64 +107,61 @@ button {
   color: #000;
   font-weight: 600;
   cursor: pointer;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from {box-shadow: 0 0 10px gold;}
-  to {box-shadow: 0 0 25px orange;}
-}
-
-.footer {
-  margin-top: 18px;
-  font-size: 14px;
-  opacity: 0.85;
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
 }
 </style>
 </head>
 
 <body>
 
-<!-- PARTICLES -->
+<!-- FIREWORKS -->
 <script>
-for(let i=0;i<30;i++){
-  let p = document.createElement("div");
-  p.className = "particle";
-  p.style.left = Math.random()*100 + "vw";
-  p.style.animationDuration = (5 + Math.random()*5) + "s";
-  p.style.animationDelay = Math.random()*5 + "s";
-  document.body.appendChild(p);
+for (let i = 0; i < 10; i++) {
+  let fw = document.createElement("div");
+  fw.className = "firework";
+  fw.style.left = Math.random() * 100 + "vw";
+  fw.style.top = Math.random() * 60 + "vh";
+  fw.style.animationDelay = Math.random() * 2 + "s";
+  document.body.appendChild(fw);
 }
 </script>
 
 <div class="container">
   <div class="card">
-    <h1>🎆 Happy New Year 2026 🎆</h1>
+
+    <div class="shimmer">🎆 Happy New Year 2026 🎆</div>
 
     <div class="message">
-  Heartfelt New Year wishes to <span class="name">Rakesh</span> & Family,<br><br>
+      Dear <span class="name">Rakesh</span> & Family,<br><br>
 
-  As we step into the New Year 2026, we extend our warm wishes
-  to you and your family for good health, happiness, and prosperity.<br><br>
+      As we welcome the New Year, we send our warmest wishes to you
+      and your family for happiness, good health, and prosperity.<br><br>
 
-  May this year bring peace to your home, success to your efforts,
-  and many joyful moments to cherish together.<br><br>
+      May this year bring peace to your home, success in your journey,
+      and many joyful moments to cherish together.<br><br>
 
-  We are truly delighted to welcome you into our family
-  and look forward to a beautiful journey ahead.
-</div>
+      We are truly happy to welcome you into our family
+      and look forward to a wonderful year ahead.
+    </div>
 
+    <button class="music-btn" onclick="playMusic()">▶ Play Music</button>
 
- <button onclick="surprise()">With Warm Regards ✨</button>
-
-    <div class="footer" id="footer"></div>
+    <div class="footer">
+      — With warm regards 🌸<br>
+      <strong>Reethamshi & Family</strong>
+    </div>
   </div>
 </div>
 
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3?filename=soft-piano-ambient-110397.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-function surprise(){
-  document.getElementById("footer").innerHTML =
-    "— With warm regards and best wishes 🌸<br><strong>Reethamshi and Family</strong>";
+function playMusic(){
+  const music = document.getElementById("bgMusic");
+  music.play();
 }
 </script>
 
