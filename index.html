@@ -6,190 +6,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #000;
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-}
-
-/* ===== CANVAS FIREWORKS ===== */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-/* ===== SECTIONS ===== */
-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  position: relative;
-  z-index: 1;
-}
-
-.glass {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(18px);
-  border-radius: 28px;
-  padding: 40px 30px;
-  max-width: 460px;
-  width: 95%;
-  text-align: center;
-  box-shadow: 0 0 60px rgba(255,215,0,0.25);
-}
-
-/* ===== HERO TEXT ===== */
-.hero {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  background: linear-gradient(90deg, #fff, gold, #fff);
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 4s infinite;
-}
-
-@keyframes shimmer {
-  0% {background-position: -200%;}
-  100% {background-position: 200%;}
-}
-
-.message {
-  margin-top: 20px;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.name {
-  color: gold;
-  font-weight: 600;
-}
-
-.footer {
-  margin-top: 25px;
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* ===== TAP OVERLAY ===== */
-.tap {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  opacity: 0.7;
-  z-index: 5;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- FIREWORKS CANVAS -->
 <canvas id="fireworks"></canvas>
 
-<!-- SECTION 1 -->
-<section>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop muted>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SECTION 1 : HERO -->
+<section class="section hero">
   <div class="glass">
-    <div class="hero">Happy New Year 2026 ✨</div>
-    <div class="message">
-      A new year begins with hope,<br>
-      warmth, and beautiful new journeys.
-    </div>
+    <h1>✨ Welcome 2026 ✨</h1>
+    <p>A New Year filled with hope, warmth, and new beginnings</p>
   </div>
 </section>
 
-<!-- SECTION 2 -->
-<section>
+<!-- SECTION 2 : MAIN WISH -->
+<section class="section">
   <div class="glass">
-    <div class="message">
-      Wishing you a prosperous new year<span class="name">Rakesh</span> & Family,<br><br>
+    <h2>New Year Wishes</h2>
 
-      As we step into 2026, we extend our heartfelt wishes
-      to you and your family for happiness, good health,
-      and prosperity.<br><br>
+    <p>
+      As the New Year 2026 begins, the
+      <strong>Reethamshi Family</strong> extends their heartfelt wishes to
+    </p>
 
-      May this year bring peace to your home,
-      success to your endeavors,
-      and many moments to cherish together.
-    </div>
+    <p class="families">
+      <strong>Rakesh & His Family</strong>
+    </p>
+
+    <p>
+      May this year bring good health, happiness,
+      peace, and prosperity to your home,
+      and may every day be filled with positivity and joy.
+    </p>
   </div>
 </section>
 
-<!-- SECTION 3 -->
-<section>
+<!-- SECTION 3 : CLOSING -->
+<section class="section">
   <div class="glass">
-    <div class="message">
-      We are truly delighted to welcome you into our family
-      and look forward to a wonderful journey ahead.
-    </div>
-    <div class="footer">
-      — With warm regards 🌸<br>
+    <p>
+      We look forward to a year filled with harmony,
+      understanding, and beautiful moments ahead.
+    </p>
+
+    <p>
+      Wishing you a joyful New Year
+      and a wonderful journey forward.
+    </p>
+
+    <div class="signature">
+      — With warm New Year wishes 🌸<br>
       <strong>Reethamshi & Family</strong>
     </div>
   </div>
 </section>
 
-<div class="tap">🔊 Tap anywhere to enable music</div>
+<div class="tap-note">🔊 Tap anywhere once to enable music</div>
 
-<!-- MUSIC -->
-<audio id="music" loop muted>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3" type="audio/mpeg">
-</audio>
+<script src="fireworks.js"></script>
 
 <script>
-/* ===== MUSIC AUTO START (MUTED) ===== */
-const music = document.getElementById("music");
+/* MUSIC: auto-start muted, unmute on first tap */
+const music = document.getElementById("bgMusic");
 music.play().catch(()=>{});
 
 document.body.addEventListener("click", () => {
   music.muted = false;
-  music.play();
-}, { once: true });
-
-/* ===== FIREWORKS ENGINE ===== */
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let fireworks = [];
-
-function createFirework() {
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height * 0.5;
-  const colors = ["#ffd700", "#ff4d4d", "#4dd2ff"];
-  fireworks.push({ x, y, r: 0, color: colors[Math.floor(Math.random()*3)] });
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  fireworks.forEach((f, i) => {
-    ctx.beginPath();
-    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-    ctx.strokeStyle = f.color;
-    ctx.stroke();
-    f.r += 2;
-    if (f.r > 80) fireworks.splice(i, 1);
-  });
-  requestAnimationFrame(animate);
-}
-
-setInterval(createFirework, 800);
-animate();
-</script>
-
-</body>
-</html>
-
-
+  music.play
