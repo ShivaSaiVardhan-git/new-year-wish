@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  background: #000;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+/* FIREWORK CANVAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* SECTIONS */
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* GLASS CARD */
+.glass {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 30px;
+  padding: 45px 35px;
+  max-width: 540px;
+  width: 95%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(255,215,0,0.25);
+}
+
+/* HERO */
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  background: linear-gradient(90deg, #ffffff, #ffd700, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  margin-top: 15px;
+  font-size: 17px;
+}
+
+/* HEADINGS */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+/* TEXT */
+p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+
+.families {
+  margin-top: 18px;
+  font-size: 18px;
+  color: gold;
+}
+
+/* SIGNATURE */
+.signature {
+  margin-top: 25px;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* MUSIC NOTE */
+.tap-note {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: 0.6;
+  z-index: 2;
+}
