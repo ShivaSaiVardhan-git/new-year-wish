@@ -1,49 +1,60 @@
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 let particles = [];
 
 class Particle {
-  constructor(x, y, color) {
+  constructor(x, y, color, power = 6) {
     this.x = x;
     this.y = y;
-    this.radius = Math.random() * 2 + 1;
     this.color = color;
-    this.velocity = {
-      x: (Math.random() - 0.5) * 7,
-      y: (Math.random() - 0.5) * 7
-    };
     this.alpha = 1;
+    this.vx = (Math.random() - 0.5) * power;
+    this.vy = (Math.random() - 0.5) * power;
   }
 
   draw() {
     ctx.save();
     ctx.globalAlpha = this.alpha;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
 
   update() {
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    this.x += this.vx;
+    this.y += this.vy;
     this.alpha -= 0.015;
   }
 }
 
-function explode() {
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height * 0.55;
-  const colors = ["#ffd700", "#ff4d4d", "#4dd2ff", "#ffffff"];
-
-  for (let i = 0; i < 90; i++) {
-    particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+function burstAt(x, y, power = 7, count = 80, colorSet = null) {
+  const colors = colorSet || ["#ffd700", "#ff4d4d", "#4dd2ff", "#ffffff"];
+  for (let i = 0; i < count; i++) {
+    particles.push(
+      new Particle(
+        x,
+        y,
+        colors[Math.floor(Math.random() * colors.length)],
+        power
+      )
+    );
   }
+}
+
+function finalBurst() {
+  burstAt(
+    canvas.width / 2,
+    canvas.height / 2,
+    12,
+    220,
+    ["#ffd700", "#ffcc00", "#ffffff"]
+  );
 }
 
 function animate() {
@@ -59,5 +70,9 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-setInterval(explode, 900);
 animate();
+
+// expose functions globally
+window.burstAt = burstAt;
+window.finalBurst = finalBurst;
+
