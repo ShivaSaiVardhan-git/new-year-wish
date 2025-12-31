@@ -1,10 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: #000;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+/* Canvas */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Scene */
+.scene {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+/* Text */
+.text {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+  background: linear-gradient(90deg, #ffffff, gold, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .text.blur {
   filter: blur(6px);
   opacity: 0.6;
 }
 
-.text.locked {
-  opacity: 1;
-  transform: scale(1.05);
+/* Hint */
+.hint {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: 0.6;
 }
-
