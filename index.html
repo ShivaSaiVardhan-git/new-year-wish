@@ -1,83 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Happy New Year 2026</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<!-- FIREWORKS CANVAS -->
-<canvas id="fireworks"></canvas>
-
-<!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" loop muted>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3" type="audio/mpeg">
-</audio>
-
-<!-- SECTION 1 : HERO -->
-<section class="section hero">
-  <div class="glass">
-    <h1>✨ Welcome 2026 ✨</h1>
-    <p>A New Year filled with hope, warmth, and new beginnings</p>
-  </div>
-</section>
-
-<!-- SECTION 2 : MAIN WISH -->
-<section class="section">
-  <div class="glass">
-    <h2>New Year Wishes</h2>
-
-    <p>
-      As the New Year 2026 begins, the
-      <strong>Reethamshi Family</strong> extends their heartfelt wishes to
-    </p>
-
-    <p class="families">
-      <strong>Rakesh & His Family</strong>
-    </p>
-
-    <p>
-      May this year bring good health, happiness,
-      peace, and prosperity to your home,
-      and may every day be filled with positivity and joy.
-    </p>
-  </div>
-</section>
-
-<!-- SECTION 3 : CLOSING -->
-<section class="section">
-  <div class="glass">
-    <p>
-      We look forward to a year filled with harmony,
-      understanding, and beautiful moments ahead.
-    </p>
-
-    <p>
-      Wishing you a joyful New Year
-      and a wonderful journey forward.
-    </p>
-
-    <div class="signature">
-      — With warm New Year wishes 🌸<br>
-      <strong>Reethamshi & Family</strong>
-    </div>
-  </div>
-</section>
-
-<div class="tap-note">🔊 Tap anywhere once to enable music</div>
-
-<script src="fireworks.js"></script>
-
 <script>
-/* MUSIC: auto-start muted, unmute on first tap */
-const music = document.getElementById("bgMusic");
-music.play().catch(()=>{});
+const scenes = [
+  "✨ A new year begins…",
+  "🎆 With hope in every spark",
+  "🤍 Grateful for the warmth<br>with which you welcomed us",
+  "🌸 Warm New Year wishes from<br><strong>Reethamshi Family</strong>",
+  "✨ To Rakesh & his family<br><br>Happy New Year 2026"
+];
 
-document.body.addEventListener("click", () => {
-  music.muted = false;
-  music.play
+let index = 0;
+let locked = false;
+
+const textEl = document.getElementById("text");
+const music = document.getElementById("music");
+
+textEl.innerHTML = scenes[index];
+textEl.classList.add("show");
+
+document.body.addEventListener("click", (e) => {
+  if (locked) return;
+
+  // enable music on first tap
+  if (music.muted) {
+    music.muted = false;
+    music.play();
+  }
+
+  // firework at tap position
+  burstAt(e.clientX, e.clientY);
+
+  // BLUR logic for gratitude scene
+  if (index === 2 && textEl.classList.contains("blur")) {
+    textEl.classList.remove("blur");
+    return;
+  }
+
+  index++;
+  if (index < scenes.length) {
+    textEl.classList.remove("show");
+    setTimeout(() => {
+      textEl.innerHTML = scenes[index];
+      textEl.classList.add("show");
+
+      if (index === 2) {
+        textEl.classList.add("blur");
+      }
+
+      // FINAL MASSIVE BURST + LOCK
+      if (index === scenes.length - 1) {
+        finalBurst();
+        locked = true;
+        document.querySelector(".hint").innerText = "✨ This wish stays ✨";
+      }
+    }, 300);
+  }
+});
+</script>
