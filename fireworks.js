@@ -1,13 +1,13 @@
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 let particles = [];
 
 class Particle {
-  constructor(x, y, color, power = 6) {
+  constructor(x, y, color, power) {
     this.x = x;
     this.y = y;
     this.color = color;
@@ -33,14 +33,14 @@ class Particle {
   }
 }
 
-function burstAt(x, y, power = 7, count = 80, colorSet = null) {
-  const colors = colorSet || ["#ffd700", "#ff4d4d", "#4dd2ff", "#ffffff"];
+function burstAt(x, y, power = 7, count = 80, colors = null) {
+  const palette = colors || ["#ffd700", "#ff4d4d", "#4dd2ff", "#ffffff"];
   for (let i = 0; i < count; i++) {
     particles.push(
       new Particle(
         x,
         y,
-        colors[Math.floor(Math.random() * colors.length)],
+        palette[Math.floor(Math.random() * palette.length)],
         power
       )
     );
@@ -72,7 +72,7 @@ function animate() {
 
 animate();
 
-// expose functions globally
+/* expose globally */
 window.burstAt = burstAt;
 window.finalBurst = finalBurst;
 
