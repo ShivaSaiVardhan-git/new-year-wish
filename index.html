@@ -5,85 +5,79 @@
 <title>Happy New Year 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- BACKGROUND -->
+<div class="bg"></div>
+
+<!-- FIREWORKS -->
 <canvas id="fireworks"></canvas>
 
+<!-- MUSIC -->
 <audio id="music" loop muted>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3" type="audio/mpeg">
 </audio>
 
+<!-- CONTENT -->
 <div class="scene">
   <div id="text" class="text"></div>
   <div class="hint">Tap anywhere ✨</div>
 </div>
 
+<script src="fireworks.js"></script>
+
 <script>
-/* ===== SCENES ===== */
 const scenes = [
-  "✨ A new year begins…",
-  "🎆 With hope in every spark",
-  "🤍 Grateful for the warmth<br>with which you welcomed us",
-  "🌸 Warm New Year wishes from<br><strong>Reethamshi Family</strong>",
-  "✨ To Rakesh & his family<br><br>Happy New Year 2026"
+  "A new year begins…",
+  "Every spark carries a wish",
+  "Grateful for the warmth<br>with which you welcomed us",
+  "Warm wishes from<br>Reethamshi Family",
+  "To Rakesh & his family<br><br>Happy New Year 2026"
 ];
 
-let index = 0;
+let i = 0;
 let locked = false;
-
-const textEl = document.getElementById("text");
+const text = document.getElementById("text");
 const music = document.getElementById("music");
 
-textEl.innerHTML = scenes[index];
-setTimeout(() => textEl.classList.add("show"), 300);
+text.innerHTML = scenes[i];
+text.classList.add("show");
 
 document.body.addEventListener("click", (e) => {
   if (locked) return;
 
-  /* Enable music */
   if (music.muted) {
     music.muted = false;
     music.play();
   }
 
-  /* Firework at tap */
-  if (window.burstAt) {
-    burstAt(e.clientX, e.clientY);
-  }
+  if (window.burstAt) burstAt(e.clientX, e.clientY);
 
-  /* Blur reveal logic */
-  if (index === 2 && textEl.classList.contains("blur")) {
-    textEl.classList.remove("blur");
+  if (i === 2 && text.classList.contains("blur")) {
+    text.classList.remove("blur");
     return;
   }
 
-  index++;
-  if (index < scenes.length) {
-    textEl.classList.remove("show");
+  i++;
+  if (i < scenes.length) {
+    text.classList.remove("show");
     setTimeout(() => {
-      textEl.innerHTML = scenes[index];
-      textEl.classList.add("show");
-
-      if (index === 2) {
-        textEl.classList.add("blur");
-      }
-
-      /* Final scene */
-      if (index === scenes.length - 1) {
-        if (window.finalBurst) finalBurst();
+      text.innerHTML = scenes[i];
+      text.classList.add("show");
+      if (i === 2) text.classList.add("blur");
+      if (i === scenes.length - 1) {
+        finalBurst();
         locked = true;
         document.querySelector(".hint").innerText = "✨ This wish stays ✨";
       }
-    }, 300);
+    }, 400);
   }
 });
 </script>
-
-<script src="fireworks.js"></script>
 
 </body>
 </html>
