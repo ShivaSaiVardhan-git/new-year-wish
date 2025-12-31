@@ -1,4 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<audio id="music" loop muted>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9eaf0f27f2.mp3" type="audio/mpeg">
+</audio>
+
+<div class="scene">
+  <div id="text" class="text"></div>
+  <div class="hint">Tap anywhere ✨</div>
+</div>
+
 <script>
+/* ===== SCENES ===== */
 const scenes = [
   "✨ A new year begins…",
   "🎆 With hope in every spark",
@@ -14,21 +39,23 @@ const textEl = document.getElementById("text");
 const music = document.getElementById("music");
 
 textEl.innerHTML = scenes[index];
-textEl.classList.add("show");
+setTimeout(() => textEl.classList.add("show"), 300);
 
 document.body.addEventListener("click", (e) => {
   if (locked) return;
 
-  // enable music on first tap
+  /* Enable music */
   if (music.muted) {
     music.muted = false;
     music.play();
   }
 
-  // firework at tap position
-  burstAt(e.clientX, e.clientY);
+  /* Firework at tap */
+  if (window.burstAt) {
+    burstAt(e.clientX, e.clientY);
+  }
 
-  // BLUR logic for gratitude scene
+  /* Blur reveal logic */
   if (index === 2 && textEl.classList.contains("blur")) {
     textEl.classList.remove("blur");
     return;
@@ -45,9 +72,9 @@ document.body.addEventListener("click", (e) => {
         textEl.classList.add("blur");
       }
 
-      // FINAL MASSIVE BURST + LOCK
+      /* Final scene */
       if (index === scenes.length - 1) {
-        finalBurst();
+        if (window.finalBurst) finalBurst();
         locked = true;
         document.querySelector(".hint").innerText = "✨ This wish stays ✨";
       }
@@ -55,3 +82,8 @@ document.body.addEventListener("click", (e) => {
   }
 });
 </script>
+
+<script src="fireworks.js"></script>
+
+</body>
+</html>
